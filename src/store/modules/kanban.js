@@ -1,4 +1,4 @@
-import {IN_WORK_STAGES, PLANNED_STAGES} from "@/api/stageNames";
+import {PLANNED_STAGES} from "@/api/stageNames";
 
 const filterKanbanByAgreed = function (list, agreed) {
     return list.reduce((acc, it) => {
