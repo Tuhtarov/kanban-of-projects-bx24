@@ -9,7 +9,6 @@
         item-text="title"
         item-value="id"
 
-        placeholder="Проекты"
         background-color="white"
         chips hide-details outlined multiple filled solo
     >

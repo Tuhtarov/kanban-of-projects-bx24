@@ -32,8 +32,6 @@ export default {
         },
 
         async confirmMoved(_, moved) {
-            console.log(moved);
-
             return this.dispatch('kanban/updateTask', {
                 taskId: moved.task.ID,
                 RESPONSIBLE_ID: moved.task?.RESPONSIBLE_ID,

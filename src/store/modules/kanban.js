@@ -34,11 +34,9 @@ export default {
         myProjectsFilter: state => state.myProjectsFilter,
         projectById: state => id => state.list.find(it => parseInt(it.projectTaskId) === parseInt(id)),
 
-        stageById: state => id => state.stages[id] ?? null,
         stageByTitle: state => title => {
             for (let key in state.stages)
-                if (state.stages[key].TITLE === title)
-                    return state.stages[key]
+                if (state.stages[key].TITLE === title) return state.stages[key]
             return null;
         },
     },

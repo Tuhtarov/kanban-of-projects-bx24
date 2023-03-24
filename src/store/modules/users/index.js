@@ -15,17 +15,13 @@ export default {
 
     actions: {
         async setAll({commit}, val) {
-            return commit('all', val.reduce((acc, it) => {
-                const user = {
+            return commit('all', val.map(it => ({
                     ID: it.ID,
                     NAME: it.NAME,
                     LAST_NAME: it.LAST_NAME,
                     PERSONAL_PHOTO: it.PERSONAL_PHOTO
-                }
-
-                acc.push(user)
-                return acc
-            }, []))
+                }))
+            )
         },
 
         async setCurrent({commit}, val) {

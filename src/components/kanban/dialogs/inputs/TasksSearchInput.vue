@@ -4,6 +4,7 @@
 
     <v-text-field
         v-model="taskTitle"
+        placeholder="..."
         hide-details outlined filled solo
     />
   </v-col>

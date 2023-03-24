@@ -4,6 +4,7 @@ export default {
 
         projectIds: [],
         userIds: [],
+        onlyResponsible: false,
         taskTitle: '',
 
         reloadProjectsEvent: () => {
@@ -15,6 +16,7 @@ export default {
         dialog: state => state.dialog,
         projectIds: state => state.projectIds,
         userIds: state => state.userIds,
+        onlyResponsible: state => state.onlyResponsible,
         taskTitle: (state) => state.taskTitle,
         filterReady: state => state.userIds.length > 0
             || state.projectIds.length > 0
@@ -26,6 +28,7 @@ export default {
 
     mutations: {
         dialog: (state, val) => state.dialog = val,
+        onlyResponsible: (state, val) => state.onlyResponsible = val,
 
         projectIds: (state, val) => state.projectIds = val,
         userIds: (state, val) => state.userIds = val,
@@ -44,7 +47,7 @@ export default {
             let filter = {}
 
             if (getters.userIds.length > 0)
-                filter.BY = getters.userIds.map(it => parseInt(it))
+                filter[getters.onlyResponsible ? 'RESPONSIBLE_ID' : 'BY'] = getters.userIds.map(it => parseInt(it))
 
             if (getters.projectIds.length > 0)
                 filter.ID = getters.projectIds.map(it => parseInt(it));
@@ -77,6 +80,10 @@ export default {
 
         async setTaskTitleFilter({commit}, val = []) {
             commit('taskTitle', val)
+        },
+
+        async setOnlyResponsible({commit}, val) {
+            commit('onlyResponsible', val)
         },
 
         async setReloadProjectsEvent({commit}, val = []) {

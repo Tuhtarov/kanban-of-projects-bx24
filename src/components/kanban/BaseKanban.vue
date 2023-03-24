@@ -1,5 +1,5 @@
 <template>
-  <div class="kanban d-flex overflow-x-auto overflow-visible flex-wrap">
+  <div v-if="kanban.length > 0 && stages.length > 0" class="kanban d-flex overflow-x-auto overflow-visible flex-wrap">
     <div class="kanban-body kanban-header d-flex" :style="headerStyles" ref="kanbanHeader">
       <div class="kanban-body-row">
         <div class="kanban-body-block-header kanban-body-block__project">
@@ -73,6 +73,14 @@
 
     <ConfirmMoveTaskDialog/>
   </div>
+
+  <v-container v-else fluid class="fill-height">
+    <v-row align-content="center" justify="center" class="fill-height">
+      <v-col class="py-0 mt-3 d-flex" cols="12">
+        <p class="py-0 mb-0 mx-auto" style="font-size: 1rem;"><b>Пусто 😲</b></p>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>

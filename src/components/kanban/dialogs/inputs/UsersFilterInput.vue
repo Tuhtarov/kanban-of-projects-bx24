@@ -4,7 +4,6 @@
     <v-autocomplete
         v-model="selectedUsers"
         :items="users"
-        placeholder="Пользователи"
         no-data-text="Не найдено"
         background-color="white"
         item-title="NAME"
@@ -45,22 +44,17 @@
 
       <template v-slot:prepend-item>
         <div class="first-item">
-          <v-btn @click="selectAll" class="mr-1" depressed color="blue-grey darken-3" dark>
-            {{ !selectedAll ? 'выбрать всех' : 'очистить' }}
+          <v-btn @click="toggleSelectUsers" depressed color="blue-grey darken-3" dark>
+            {{ selectedUsers.length > 0 ? 'очистить' : 'все' }}
           </v-btn>
 
-<!--          <v-btn-->
-<!--              :color="isResp ? 'teal' : 'secondary'" text-->
-<!--              outlined class="mr-1" @click="isResp = !isResp"-->
-<!--          >-->
-<!--            ответственный-->
-<!--          </v-btn>-->
+          <v-btn @click="isResp = !isResp" :color="!isResp ? 'primary' : 'secondary'" link class="ml-3">
+            постановщик
+          </v-btn>
 
-<!--          <v-btn-->
-<!--              :color="!isResp ? 'teal' : 'secondary'" outlined text-->
-<!--              @click="isResp = !isResp">-->
-<!--            постановщик-->
-<!--          </v-btn>-->
+          <v-btn @click="isResp = !isResp" :color="isResp ? 'primary' : 'secondary'" link class="ml-1">
+            ответственный
+          </v-btn>
         </div>
       </template>
     </v-autocomplete>
@@ -87,33 +81,37 @@ export default {
 
   watch: {
     selectedUsers(val) {
-      this.setUsersIdsFilter(val.reduce((acc, it) => {
-        acc.push(it)
-        return acc
-      }, []))
+      this.setUsersIdsFilter(val)
+    },
+
+    isResp(val) {
+      this.setOnlyResponsible(val)
     },
   },
 
   methods: {
-    ...mapActions({
-      setUsersIdsFilter: 'filterDialog/setUsersIdsFilter',
-      setReloadUsersEvent: 'filterDialog/setReloadUsersEvent',
-    }),
-
-    setOpt() {
-      window.BX24.callMethod('user.option.set', {options: {selected: JSON.stringify(this.selected)}});
-      this.$store.dispatch('GET_USERS_TASKS')
-    },
+    ...mapActions('filterDialog', [
+      'setUsersIdsFilter',
+      'setReloadUsersEvent',
+      'setOnlyResponsible',
+    ]),
 
     unselect(id) {
       const index = this.selectedUsers.findIndex(it => parseInt(it) === parseInt(id))
       if (index >= 0) this.selectedUsers.splice(index, 1)
     },
 
+    toggleSelectUsers() {
+      this.selectedUsers.length > 0 ? this.clear() : this.selectAll()
+    },
+
     selectAll() {
-      if (this.selectedAll) this.selectedUsers = []
-      else this.selectedUsers = this.users.slice()
-    }
+      this.selectedUsers = this.users.slice()
+    },
+
+    clear() {
+      this.selectedUsers = []
+    },
   },
 
   computed: {

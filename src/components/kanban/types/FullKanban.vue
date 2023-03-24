@@ -1,5 +1,5 @@
 <template>
-  <BaseKanban v-if="list.length > 0 && stages.length > 0" :kanban="list" :stages="stages"/>
+  <BaseKanban :kanban="list" :stages="stages"/>
 </template>
 
 <script>
