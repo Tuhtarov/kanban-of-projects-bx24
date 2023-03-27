@@ -26,12 +26,14 @@ export default new Vuex.Store({
                     'USER_TYPE':'employee',
                     'ACTIVE': true,
                 }],
-                currentUser: ['user.current']
+                currentUser: ['user.current'],
+                newTasks: ['tasks.kanban.newTasks'],
             }, r => {
                 this.dispatch('kanban/setStages', r.headers_0.answer.result)
                 this.dispatch('kanban/setList', r.kanban_0.answer.result)
                 this.dispatch('kanban/setProjects', r.kanban_0.answer.result)
                 this.dispatch('users/setAll', r.users_0.answer.result)
+                this.dispatch('kanban/setNewTasks', r.newTasks_0.answer.result)
                 this.dispatch('users/setCurrent', r.currentUser_0.answer.result)
                 this.dispatch('loaders/loading', {key: 'batch', value: false})
             })
@@ -44,9 +46,11 @@ export default new Vuex.Store({
                 window.BX24.complexBatch({
                     headers: ['tasks.kanban.headers'],
                     kanban: ['tasks.kanban.list', filter],
+                    newTasks: ['tasks.kanban.newTasks'],
                 }, (r) => {
                     this.dispatch('kanban/setStages', r.headers_0.answer.result)
                     this.dispatch('kanban/setList', r.kanban_0.answer.result)
+                    this.dispatch('kanban/setNewTasks', r.newTasks_0.answer.result)
                     this.dispatch('loaders/loading', {key: 'batch', value: false})
                     resolve()
                 })

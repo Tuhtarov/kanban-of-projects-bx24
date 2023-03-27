@@ -19,6 +19,7 @@ export default {
         list: [],
         stages: [],
         projects: [],
+        newTasks: [],
         myProjectsFilter: false
     },
     getters: {
@@ -27,6 +28,16 @@ export default {
 
         inWorkList: state => filterKanbanByAgreed(state.list, true),
         plannedList: state => filterKanbanByAgreed(state.list, false),
+
+        plannedTasksCnt: (_state, getters) => getters.plannedList.reduce((cnt, project) => {
+            for (let stage in project.tasks)
+                if (PLANNED_STAGES.includes(stage)) cnt += project.tasks[stage].length
+
+            return cnt
+        }, 0),
+
+        newTasks: (state) => state.newTasks,
+        newTasksCnt: (_state, getters) => getters.newTasks.length,
 
         plannedStages: state => filterKanbanStagesByStageNames(state.stages, PLANNED_STAGES),
 
@@ -44,11 +55,16 @@ export default {
         list: (state, val) => state.list = val,
         stages: (state, val) => state.stages = val,
         projects: (state, kanban) => state.projects = kanban.map(it => ({id: it.projectTaskId, title: it.title})),
-        myProjectsFilter: (state, val) => state.myProjectsFilter = val
+        myProjectsFilter: (state, val) => state.myProjectsFilter = val,
+        newTasks: (state, val) => state.newTasks = val,
     },
     actions: {
         setList({commit}, val) {
             commit('list', val)
+        },
+
+        setNewTasks({commit}, val) {
+            commit('newTasks', val)
         },
 
         setStages({commit}, val) {

@@ -28,10 +28,10 @@
 </template>
 
 <script>
-import UsersFilterInput from "@/components/kanban/dialogs/inputs/UsersFilterInput.vue";
-import ProjectsFilterInput from "@/components/kanban/dialogs/inputs/ProjectsFilterInput.vue";
+import UsersFilterInput from "@/components/header/dialogs/inputs/UsersFilterInput.vue";
+import ProjectsFilterInput from "@/components/header/dialogs/inputs/ProjectsFilterInput.vue";
 import {mapActions, mapGetters} from "vuex";
-import TasksSearchInput from "@/components/kanban/dialogs/inputs/TasksSearchInput.vue";
+import TasksSearchInput from "@/components/header/dialogs/inputs/TasksSearchInput.vue";
 
 export default {
   name: "KanbanFilterInputs",

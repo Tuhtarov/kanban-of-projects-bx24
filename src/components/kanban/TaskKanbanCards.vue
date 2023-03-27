@@ -35,9 +35,11 @@
             <span v-if="task.PROGRESS_TIME > 0">- {{ task.PROGRESS_TIME }}%</span>
           </p>
 
-          <p class="mb-0" style="font-size: 12px;text-align: end;width: inherit;">
-            {{ task.DEADLINE }}
-          </p>
+          <div :title="task.CLOSED_DATE ? `Закрыта: ${task.CLOSED_DATE}` : 'Не закрыта'">
+            <p class="mb-0" style="font-size: 12px;text-align: end;width: inherit;">
+              {{ task.DEADLINE }}  <span v-show="task.IS_EXPIRED">🔥</span>
+            </p>
+          </div>
         </v-card-text>
 
         <v-card-actions class="my-0 pt-0 pb-1 ps-3">
