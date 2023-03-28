@@ -21,7 +21,7 @@
             v-for="(task, i) in newTasks"
             :key="i"
             link
-            @click="goto"
+            @click="goto(task)"
             :title="`Задача №${task.ID}`"
         >
           <v-list-item-title style="font-size: 0.9rem;">
